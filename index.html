@@ -285,8 +285,7 @@
   </div>
 
   <p class="note">
-    این یک الگوی نمونه برای پروژه شماست. داده‌های نمایش‌داده‌شده آزمایشی هستند و به هیچ پایگاه‌داده واقعی متصل نیستند —
-    برای استفاده واقعی باید به سرور و پایگاه‌داده مدارک خودتان وصل شود، و فقط رکوردهای واقعی خودتان به‌عنوان معتبر نمایش داده شوند.
+  
   </p>
 </main>
 
@@ -297,8 +296,8 @@ const demoRecords = {
     name: "سید مهدی مجابی",
     nationalId: "0014349612",
     field: "بهداشت حرفه‌ای",
-    degree: " پیوستهکارشناسی",
-    unit: "واحد علوم پزشکی بروجرد"
+    degree: " کارشناسی پیوسته",
+    unit: "بروجرد-علوم پزشکی"
   },
   "401987654": {
     name: "نام نمونه دو",
@@ -376,7 +375,7 @@ document.getElementById('inquiryForm').addEventListener('submit', function(e){
 
     if(record){
       statusBanner.className = 'status-banner ok';
-      statusTitle.textContent = 'اطلاعات مدرک معتبر است';
+      statusTitle.textContent = 'اطلاعات دانشنامه معتبر است';
       statusSub.textContent = 'اطلاعات دانش‌آموخته معتبر و مورد تایید است';
       document.getElementById('pName').textContent = record.name;
       document.getElementById('pNid').textContent = record.nationalId;
