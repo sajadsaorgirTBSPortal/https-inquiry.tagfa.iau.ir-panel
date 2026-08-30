@@ -107,4 +107,305 @@
   }
   .captcha-input{width:120px;flex:none;}
   .captcha-input input{
-    width:100%;padding:12px 10
+    width:100%;padding:12px 10px;font-family:inherit;font-size:15px;text-align:center;
+    border:1px solid #D8DCE3;border-radius:10px;background:#fff;color:var(--ink);
+  }
+  .captcha-input input::placeholder{color:#A6ACB8;font-size:13px;}
+  .refresh-btn{
+    background:none;border:none;cursor:pointer;font-size:18px;color:var(--navy-mid);
+    padding:6px;flex:none;
+  }
+
+  button.submit{
+    width:100%;
+    background:var(--blue-btn);
+    color:#fff;
+    border:none;
+    padding:14px;
+    font-family:inherit;
+    font-size:15.5px;
+    font-weight:700;
+    border-radius:12px;
+    cursor:pointer;
+  }
+  button.submit:disabled{background:#9AA4B0;cursor:progress;}
+
+  .back-link{
+    display:block;text-align:center;margin-top:20px;
+    font-size:14px;color:#3A4A7A;text-decoration:none;
+  }
+
+  .captcha-error{
+    font-size:12.5px;color:var(--err);margin-top:-14px;margin-bottom:18px;display:none;
+  }
+  .captcha-error.show{display:block;}
+
+  .result-view{display:none;}
+  .result-view.show{display:block;}
+
+  .status-banner{
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:18px;
+    text-align:center;
+  }
+  .status-banner.ok{background:var(--ok-bg);border:1px solid var(--ok-line);}
+  .status-banner.err{background:var(--err-bg);border:1px solid #E3BEB3;}
+  .status-banner .title{font-weight:800;font-size:16px;margin-bottom:6px;}
+  .status-banner.ok .title{color:var(--ok);}
+  .status-banner.err .title{color:var(--err);}
+  .status-banner .sub{font-size:13px;color:var(--ink-soft);}
+
+  .person-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    text-align:center;
+  }
+  .person-name-section{
+    background:#EEF1FA;
+    padding:24px 20px;
+  }
+  .person-name{font-size:18px;font-weight:800;color:var(--navy-deep);margin-bottom:14px;}
+  .id-badge{
+    display:inline-block;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:9px 16px;
+    font-size:14px;
+    color:var(--navy-mid);
+    font-weight:600;
+  }
+  .attr{
+    padding:18px 20px;
+    background:#F7F8FB;
+    border-top:1px solid var(--line);
+  }
+  .attr:nth-of-type(odd){background:#fff;}
+  .attr .k{font-size:12.5px;color:var(--ink-soft);margin-bottom:6px;}
+  .attr .v{font-size:15.5px;font-weight:700;color:var(--navy-deep);}
+
+  .result-actions{margin-top:22px;display:flex;flex-direction:column;gap:12px;}
+  button.action-blue, button.action-red{
+    width:100%;
+    border:none;
+    padding:14px;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    border-radius:10px;
+    cursor:pointer;
+    color:#fff;
+  }
+  button.action-blue{background:var(--blue-btn);}
+  button.action-red{background:var(--red-btn);}
+
+  .note{
+    margin-top:26px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- لوگوی تصویری - تمام عرض صفحه -->
+  <div class="brand-logo">
+    <img src="https://cdn.imgurl.ir/uploads/x631292_Screenshot_20260831_001615_Chrome_Beta.jpg" alt="دانشگاه آزاد اسلامی">
+  </div>
+
+  <!-- Search form -->
+  <div class="card" id="formCard">
+    <div class="intro-text">
+      <h2>استعلام دانشنامه</h2>
+      <p>لطفاً کد تایید دانشنامه خود را وارد کنید</p>
+    </div>
+
+    <form id="inquiryForm">
+      <div class="field">
+        <label for="trackingCode">کد تایید دانشنامه / گواهی موقت پایان تحصیلات:</label>
+        <input type="text" id="trackingCode" placeholder="شماره دانشنامه خود را وارد کنید">
+        <div class="captcha-error" id="codeError" style="margin-top:8px;">لطفاً شماره دانشنامه خود را وارد کنید.</div>
+      </div>
+
+      <label style="display:block;font-size:14px;font-weight:600;margin-bottom:10px;color:var(--navy-deep);">تایید امنیتی:</label>
+      <div class="captcha-row">
+        <canvas id="captchaCanvas" width="140" height="56"></canvas>
+        <div class="captcha-input">
+          <input type="text" id="captchaAnswer" placeholder="جواب" required>
+        </div>
+        <button type="button" class="refresh-btn" id="refreshCaptcha" title="تغییر کد">⟳</button>
+      </div>
+      <div class="captcha-error" id="captchaError">پاسخ تایید امنیتی صحیح نیست.</div>
+
+      <button type="submit" class="submit" id="submitBtn">بررسی دانشنامه</button>
+    </form>
+
+    <a href="#" class="back-link">بازگشت به صفحه اصلی</a>
+  </div>
+
+  <!-- Result view -->
+  <div class="result-view" id="resultView">
+    <div class="status-banner" id="statusBanner">
+      <div class="title" id="statusTitle"></div>
+      <div class="sub" id="statusSub"></div>
+    </div>
+
+    <div class="person-card" id="personCard" style="display:none;">
+      <div class="person-name-section">
+        <div class="person-name" id="pName"></div>
+        <div class="id-badge">کد ملی: <span id="pNid"></span></div>
+      </div>
+
+      <div class="attr">
+        <div class="k">رشته تحصیلی</div>
+        <div class="v" id="pField"></div>
+      </div>
+      <div class="attr">
+        <div class="k">مقطع تحصیلی</div>
+        <div class="v" id="pDegree"></div>
+      </div>
+      <div class="attr">
+        <div class="k">واحد</div>
+        <div class="v" id="pUnit"></div>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button type="button" class="action-blue" id="issueBtn">صدور گواهی استعلام</button>
+      <button type="button" class="action-red" id="restartBtn">شروع مجدد</button>
+    </div>
+  </div>
+
+  <p class="note">
+    این یک الگوی نمونه برای پروژه شماست. داده‌های نمایش‌داده‌شده آزمایشی هستند و به هیچ پایگاه‌داده واقعی متصل نیستند —
+    برای استفاده واقعی باید به سرور و پایگاه‌داده مدارک خودتان وصل شود، و فقط رکوردهای واقعی خودتان به‌عنوان معتبر نمایش داده شوند.
+  </p>
+</main>
+
+<script>
+// داده‌های آزمایشی - در نسخه واقعی با API سرور جایگزین می‌شود
+const demoRecords = {
+  "401123456": {
+    name: "نام نمونه یک",
+    nationalId: "1234567890",
+    field: "رشته نمونه",
+    degree: "کارشناسی",
+    unit: "واحد نمونه"
+  },
+  "401987654": {
+    name: "نام نمونه دو",
+    nationalId: "0987654321",
+    field: "رشته نمونه ۲",
+    degree: "کارشناسی ارشد",
+    unit: "واحد نمونه"
+  }
+};
+
+const formCard = document.getElementById('formCard');
+const resultView = document.getElementById('resultView');
+const statusBanner = document.getElementById('statusBanner');
+const statusTitle = document.getElementById('statusTitle');
+const statusSub = document.getElementById('statusSub');
+const personCard = document.getElementById('personCard');
+const submitBtn = document.getElementById('submitBtn');
+const captchaError = document.getElementById('captchaError');
+
+// کپچای ساده
+let captchaAnswer = 0;
+const canvas = document.getElementById('captchaCanvas');
+const ctx = canvas.getContext('2d');
+
+function drawCaptcha(){
+  const a = Math.floor(Math.random()*9)+1;
+  const b = Math.floor(Math.random()*9)+1;
+  captchaAnswer = a + b;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#FAFBFC';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.font = '600 22px Vazirmatn, sans-serif';
+  ctx.fillStyle = '#1B2A5B';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(a + ' + ' + b + ' = ?', 14, 30);
+  // خطوط نویز
+  ctx.strokeStyle = 'rgba(43,62,126,0.3)';
+  for(let i=0;i<4;i++){
+    ctx.beginPath();
+    ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
+    ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
+    ctx.stroke();
+  }
+}
+drawCaptcha();
+document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha);
+
+document.getElementById('inquiryForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const code = document.getElementById('trackingCode').value.trim();
+  const userAnswer = document.getElementById('captchaAnswer').value.trim();
+  const codeError = document.getElementById('codeError');
+
+  if(!code){
+    codeError.classList.add('show');
+    return;
+  }
+  codeError.classList.remove('show');
+
+  if(parseInt(userAnswer, 10) !== captchaAnswer){
+    captchaError.classList.add('show');
+    drawCaptcha();
+    document.getElementById('captchaAnswer').value = '';
+    return;
+  }
+  captchaError.classList.remove('show');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'در حال بررسی...';
+
+  setTimeout(function(){
+    const record = demoRecords[code];
+    formCard.style.display = 'none';
+    resultView.classList.add('show');
+
+    if(record){
+      statusBanner.className = 'status-banner ok';
+      statusTitle.textContent = 'اطلاعات مدرک معتبر است';
+      statusSub.textContent = 'اطلاعات دانش‌آموخته معتبر و مورد تایید است';
+      document.getElementById('pName').textContent = record.name;
+      document.getElementById('pNid').textContent = record.nationalId;
+      document.getElementById('pField').textContent = record.field;
+      document.getElementById('pDegree').textContent = record.degree;
+      document.getElementById('pUnit').textContent = record.unit;
+      personCard.style.display = 'block';
+    } else {
+      statusBanner.className = 'status-banner err';
+      statusTitle.textContent = 'موردی یافت نشد';
+      statusSub.textContent = 'اطلاعات واردشده با هیچ رکوردی مطابقت ندارد';
+      personCard.style.display = 'none';
+    }
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'بررسی دانشنامه';
+  }, 700);
+});
+
+document.getElementById('restartBtn').addEventListener('click', function(){
+  resultView.classList.remove('show');
+  formCard.style.display = 'block';
+  document.getElementById('inquiryForm').reset();
+  drawCaptcha();
+});
+
+document.getElementById('issueBtn').addEventListener('click', function(){
+  alert('در نسخه واقعی، این دکمه یک فایل PDF گواهی صادر می‌کند.');
+});
+</script>
+
+</body>
+</html>
