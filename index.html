@@ -62,7 +62,6 @@
     box-shadow:0 8px 24px rgba(27,42,91,0.08);
   }
 
-  /* ---- Form intro text ---- */
   .intro-text{
     text-align:center;
     margin-bottom:28px;
@@ -141,7 +140,6 @@
   }
   .captcha-error.show{display:block;}
 
-  /* ---- Loading state ---- */
   .loading-box{
     display:none;
     background:#FEF9E7;
@@ -166,7 +164,6 @@
     40%{opacity:1;transform:translateY(-3px);}
   }
 
-  /* ---- Result view ---- */
   .result-view{display:none;}
   .result-view.show{display:block;}
 
@@ -254,7 +251,6 @@
     <h1>[نام سازمان/پروژه شما]</h1>
   </div>
 
-  <!-- Search form -->
   <div class="card" id="formCard">
     <div class="intro-text">
       <h2>استعلام دانشنامه</h2>
@@ -262,75 +258,187 @@
     </div>
 
     <form id="inquiryForm">
+
       <div class="field">
-        <label for="trackingCode">کد تایید دانشنامه / گواهی موقت پایان تحصیلات:</label>
-        <input type="text" id="trackingCode" placeholder="شماره دانشنامه خود را وارد کنید">
-        <div class="captcha-error" id="codeError" style="margin-top:8px;">لطفاً شماره دانشنامه خود را وارد کنید.</div>
-      </div>
+        <label for="trackingCode">
+          کد تایید دانشنامه / گواهی موقت پایان تحصیلات:
+        </label>
 
-      <label style="display:block;font-size:14px;font-weight:600;margin-bottom:10px;color:var(--navy-deep);">تایید امنیتی:</label>
-      <div class="captcha-row">
-        <canvas id="captchaCanvas" width="140" height="56"></canvas>
-        <div class="captcha-input">
-          <input type="text" id="captchaAnswer" placeholder="جواب" required>
+        <input
+          type="text"
+          id="trackingCode"
+          placeholder="شماره دانشنامه خود را وارد کنید"
+        >
+
+        <div
+          class="captcha-error"
+          id="codeError"
+          style="margin-top:8px;"
+        >
+          لطفاً شماره دانشنامه خود را وارد کنید.
         </div>
-        <button type="button" class="refresh-btn" id="refreshCaptcha" title="تغییر کد">⟳</button>
       </div>
-      <div class="captcha-error" id="captchaError">پاسخ تایید امنیتی صحیح نیست.</div>
 
-      <button type="submit" class="submit" id="submitBtn">بررسی دانشنامه</button>
+      <label style="display:block;font-size:14px;font-weight:600;margin-bottom:10px;color:var(--navy-deep);">
+        تایید امنیتی:
+      </label>
+
+      <div class="captcha-row">
+
+        <canvas
+          id="captchaCanvas"
+          width="140"
+          height="56"
+        ></canvas>
+
+        <div class="captcha-input">
+          <input
+            type="text"
+            id="captchaAnswer"
+            placeholder="جواب"
+            required
+          >
+        </div>
+
+        <button
+          type="button"
+          class="refresh-btn"
+          id="refreshCaptcha"
+          title="تغییر کد"
+        >
+          ⟳
+        </button>
+
+      </div>
+
+      <div class="captcha-error" id="captchaError">
+        پاسخ تایید امنیتی صحیح نیست.
+      </div>
+
+      <button
+        type="submit"
+        class="submit"
+        id="submitBtn"
+      >
+        بررسی دانشنامه
+      </button>
+
     </form>
 
-    <a href="#" class="back-link">بازگشت به صفحه اصلی</a>
+    <a href="#" class="back-link">
+      بازگشت به صفحه اصلی
+    </a>
   </div>
 
   <div class="loading-box" id="loadingBox">
     <span>در حال بررسی اطلاعات</span>
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </div>
 
-  <!-- Result view -->
   <div class="result-view" id="resultView">
+
     <div class="status-banner" id="statusBanner">
+
       <div class="title" id="statusTitle"></div>
+
       <div class="sub" id="statusSub"></div>
+
     </div>
 
-    <div class="person-card" id="personCard" style="display:none;">
+    <div
+      class="person-card"
+      id="personCard"
+      style="display:none;"
+    >
+
       <div class="person-name-section">
-        <div class="person-name" id="pName"></div>
-        <div class="id-badge">کد ملی: <span id="pNid"></span></div>
+
+        <div
+          class="person-name"
+          id="pName"
+        ></div>
+
+        <div class="id-badge">
+          کد ملی:
+          <span id="pNid"></span>
+        </div>
+
       </div>
 
       <div class="attr">
-        <div class="k">رشته تحصیلی</div>
-        <div class="v" id="pField"></div>
+
+        <div class="k">
+          رشته تحصیلی
+        </div>
+
+        <div
+          class="v"
+          id="pField"
+        ></div>
+
       </div>
+
       <div class="attr">
-        <div class="k">مقطع تحصیلی</div>
-        <div class="v" id="pDegree"></div>
+
+        <div class="k">
+          مقطع تحصیلی
+        </div>
+
+        <div
+          class="v"
+          id="pDegree"
+        ></div>
+
       </div>
+
       <div class="attr">
-        <div class="k">واحد دانشگاهی</div>
-        <div class="v" id="pUnit"></div>
+
+        <div class="k">
+          واحد دانشگاهی
+        </div>
+
+        <div
+          class="v"
+          id="pUnit"
+        ></div>
+
       </div>
+
     </div>
 
     <div class="result-actions">
-      <button type="button" class="action-blue" id="issueBtn">صدور گواهی استعلام</button>
-      <button type="button" class="action-red" id="restartBtn">شروع مجدد</button>
+
+      <button
+        type="button"
+        class="action-blue"
+        id="issueBtn"
+      >
+        صدور گواهی استعلام
+      </button>
+
+      <button
+        type="button"
+        class="action-red"
+        id="restartBtn"
+      >
+        شروع مجدد
+      </button>
+
     </div>
+
   </div>
 
   <p class="note">
     این یک الگوی نمونه برای پروژه شماست. داده‌های نمایش‌داده‌شده آزمایشی هستند و به هیچ پایگاه‌داده واقعی متصل نیستند —
     برای استفاده واقعی باید به سرور و پایگاه‌داده مدارک خودتان وصل شود، و فقط رکوردهای واقعی خودتان به‌عنوان معتبر نمایش داده شوند.
   </p>
+
 </main>
 
 <script>
-// Demo dataset only — replace with a real backend/API call. Only records defined
-// here are ever shown as "valid" — arbitrary typed input never passes.
+
 const demoRecords = {
   "401123456": {
     name: "نام نمونه یک",
@@ -339,6 +447,7 @@ const demoRecords = {
     degree: "کارشناسی",
     unit: "واحد نمونه"
   },
+
   "401987654": {
     name: "نام نمونه دو",
     nationalId: "0987654321",
@@ -348,107 +457,283 @@ const demoRecords = {
   }
 };
 
-const formCard = document.getElementById('formCard');
-const loadingBox = document.getElementById('loadingBox');
-const resultView = document.getElementById('resultView');
-const statusBanner = document.getElementById('statusBanner');
-const statusTitle = document.getElementById('statusTitle');
-const statusSub = document.getElementById('statusSub');
-const personCard = document.getElementById('personCard');
-const submitBtn = document.getElementById('submitBtn');
-const captchaError = document.getElementById('captchaError');
+const formCard =
+  document.getElementById('formCard');
 
-// --- simple visual captcha (client-side demo only, not real security) ---
+const loadingBox =
+  document.getElementById('loadingBox');
+
+const resultView =
+  document.getElementById('resultView');
+
+const statusBanner =
+  document.getElementById('statusBanner');
+
+const statusTitle =
+  document.getElementById('statusTitle');
+
+const statusSub =
+  document.getElementById('statusSub');
+
+const personCard =
+  document.getElementById('personCard');
+
+const submitBtn =
+  document.getElementById('submitBtn');
+
+const captchaError =
+  document.getElementById('captchaError');
+
 let captchaAnswer = 0;
-const canvas = document.getElementById('captchaCanvas');
-const ctx = canvas.getContext('2d');
+
+const canvas =
+  document.getElementById('captchaCanvas');
+
+const ctx =
+  canvas.getContext('2d');
 
 function drawCaptcha(){
-  const a = Math.floor(Math.random()*9)+1;
-  const b = Math.floor(Math.random()*9)+1;
-  captchaAnswer = a + b;
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = '#FAFBFC';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.font = '600 22px Vazirmatn, sans-serif';
-  ctx.fillStyle = '#1B2A5B';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(a + ' + ' + b + ' = ?', 14, 30);
-  // noise lines
-  ctx.strokeStyle = 'rgba(43,62,126,0.3)';
+
+  const a =
+    Math.floor(Math.random()*9)+1;
+
+  const b =
+    Math.floor(Math.random()*9)+1;
+
+  captchaAnswer =
+    a + b;
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.fillStyle =
+    '#FAFBFC';
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.font =
+    '600 22px Vazirmatn, sans-serif';
+
+  ctx.fillStyle =
+    '#1B2A5B';
+
+  ctx.textBaseline =
+    'middle';
+
+  ctx.fillText(
+    a + ' + ' + b + ' = ?',
+    14,
+    30
+  );
+
+  ctx.strokeStyle =
+    'rgba(43,62,126,0.3)';
+
   for(let i=0;i<4;i++){
+
     ctx.beginPath();
-    ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
-    ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
+
+    ctx.moveTo(
+      Math.random()*canvas.width,
+      Math.random()*canvas.height
+    );
+
+    ctx.lineTo(
+      Math.random()*canvas.width,
+      Math.random()*canvas.height
+    );
+
     ctx.stroke();
   }
 }
+
 drawCaptcha();
-document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha);
 
-document.getElementById('inquiryForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const code = document.getElementById('trackingCode').value.trim();
-  const userAnswer = document.getElementById('captchaAnswer').value.trim();
-  const codeError = document.getElementById('codeError');
-
-  if(!code){
-    codeError.classList.add('show');
-    return;
-  }
-  codeError.classList.remove('show');
-
-  if(parseInt(userAnswer, 10) !== captchaAnswer){
-    captchaError.classList.add('show');
-    drawCaptcha();
-    document.getElementById('captchaAnswer').value = '';
-    return;
-  }
-  captchaError.classList.remove('show');
-
-  submitBtn.disabled = true;
-  formCard.style.display = 'none';
-  loadingBox.classList.add('show');
-
-  setTimeout(function(){
-    const record = demoRecords[code];
-    loadingBox.classList.remove('show');
-    resultView.classList.add('show');
-
-    if(record){
-      statusBanner.className = 'status-banner ok';
-      statusTitle.textContent = 'اطلاعات دانشنامه معتبر است';
-      statusSub.textContent = 'اطلاعات دانش آموخته معتبر و مورد تایید است';
-      document.getElementById('pName').textContent = record.name;
-      document.getElementById('pNid').textContent = record.nationalId;
-      document.getElementById('pField').textContent = record.field;
-      document.getElementById('pDegree').textContent = record.degree;
-      document.getElementById('pUnit').textContent = record.unit;
-      personCard.style.display = 'block';
-    } else {
-      statusBanner.className = 'status-banner err';
-      statusTitle.textContent = 'موردی یافت نشد';
-      statusSub.textContent = 'اطلاعات واردشده با هیچ رکوردی مطابقت ندارد';
-      personCard.style.display = 'none';
-    }
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'بررسی دانشنامه';
-  }, 2000);
-});
-
-document.getElementById('restartBtn').addEventListener('click', function(){
-  resultView.classList.remove('show');
-  formCard.style.display = 'block';
-  document.getElementById('inquiryForm').reset();
-  drawCaptcha();
-});
-
-document.getElementById('issueBtn').addEventListener('click', function(){
-  window.open(
-    'https://cdn.imgurl.ir/uploads/x631292_Screenshot_20260831_001615_Chrome_Beta.jpg',
-    '_blank'
+document
+  .getElementById('refreshCaptcha')
+  .addEventListener(
+    'click',
+    drawCaptcha
   );
-});
+
+document
+  .getElementById('inquiryForm')
+  .addEventListener(
+    'submit',
+    function(e){
+
+      e.preventDefault();
+
+      const code =
+        document
+          .getElementById('trackingCode')
+          .value
+          .trim();
+
+      const userAnswer =
+        document
+          .getElementById('captchaAnswer')
+          .value
+          .trim();
+
+      const codeError =
+        document.getElementById('codeError');
+
+      if(!code){
+
+        codeError.classList.add('show');
+
+        return;
+      }
+
+      codeError.classList.remove('show');
+
+      if(
+        parseInt(userAnswer, 10)
+        !== captchaAnswer
+      ){
+
+        captchaError.classList.add('show');
+
+        drawCaptcha();
+
+        document
+          .getElementById('captchaAnswer')
+          .value = '';
+
+        return;
+      }
+
+      captchaError.classList.remove('show');
+
+      submitBtn.disabled = true;
+
+      formCard.style.display = 'none';
+
+      loadingBox.classList.add('show');
+
+      setTimeout(function(){
+
+        const record =
+          demoRecords[code];
+
+        loadingBox.classList.remove('show');
+
+        resultView.classList.add('show');
+
+        if(record){
+
+          statusBanner.className =
+            'status-banner ok';
+
+          statusTitle.textContent =
+            'اطلاعات دانشنامه معتبر است';
+
+          statusSub.textContent =
+            'اطلاعات دانش آموخته معتبر و مورد تایید است';
+
+          document
+            .getElementById('pName')
+            .textContent =
+            record.name;
+
+          document
+            .getElementById('pNid')
+            .textContent =
+            record.nationalId;
+
+          document
+            .getElementById('pField')
+            .textContent =
+            record.field;
+
+          document
+            .getElementById('pDegree')
+            .textContent =
+            record.degree;
+
+          document
+            .getElementById('pUnit')
+            .textContent =
+            record.unit;
+
+          personCard.style.display =
+            'block';
+
+        } else {
+
+          statusBanner.className =
+            'status-banner err';
+
+          statusTitle.textContent =
+            'موردی یافت نشد';
+
+          statusSub.textContent =
+            'اطلاعات واردشده با هیچ رکوردی مطابقت ندارد';
+
+          personCard.style.display =
+            'none';
+        }
+
+        submitBtn.disabled = false;
+
+        submitBtn.textContent =
+          'بررسی دانشنامه';
+
+      }, 2000);
+
+    }
+  );
+
+document
+  .getElementById('restartBtn')
+  .addEventListener(
+    'click',
+    function(){
+
+      resultView.classList.remove('show');
+
+      formCard.style.display =
+        'block';
+
+      document
+        .getElementById('inquiryForm')
+        .reset();
+
+      drawCaptcha();
+
+    }
+  );
+
+/*
+  فقط این قسمت تغییر داده شده:
+  با کلیک روی «صدور گواهی استعلام»
+  تصویر در صفحه جدید باز می‌شود.
+*/
+
+document
+  .getElementById('issueBtn')
+  .addEventListener(
+    'click',
+    function(){
+
+      window.open(
+        'https://cdn.imgurl.ir/uploads/y938441_Screenshot_20260831_001615_Chrome_Beta.jpg',
+        '_blank'
+      );
+
+    }
+  );
+
 </script>
 
 </body>
