@@ -215,8 +215,9 @@
 
 <main>
 
+  <!-- لوگوی تصویری - لینک جدید دائمی -->
   <div class="brand-logo">
-    <img src="https://cdn.imgurl.ir/uploads/x631292_Screenshot_20260831_001615_Chrome_Beta.jpg" alt="دانشگاه آزاد اسلامی">
+    <img src="https://cdn.imgurl.ir/uploads/i322905_Islamic_Azad_University_Medical_Branch_of_Tehran_Logo.jpg" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران">
   </div>
 
   <div class="card" id="formCard">
@@ -287,7 +288,6 @@
 
 <script>
 // داده‌های آزمایشی - در نسخه واقعی با API سرور جایگزین می‌شود
-// کلیدها با اعداد انگلیسی ذخیره شده‌اند (چون ورودی کاربر انگلیسی است)
 const demoRecords = {
   "140165980214": {
     name: "فاطمه برادری",
@@ -303,7 +303,6 @@ const demoRecords = {
     degree: "دکتری",
     unit: "علوم‌پزشکی-تهران"
   },
-  // ✅ رکورد جدید ۱: میلاد استادپور
   "140065874121": {
     name: "میلاد استادپور",
     nationalId: "۱۳۹۲۸۴۵۳۸۷",
@@ -311,7 +310,6 @@ const demoRecords = {
     degree: "کارشناسی",
     unit: "واحد تهران مرکزی"
   },
-  // ✅ رکورد جدید ۲: هادی افروزی
   "140554601594": {
     name: "هادی افروزی",
     nationalId: "۲۰۰۳۲۹۸۱۵۰",
@@ -330,8 +328,7 @@ const personCard = document.getElementById('personCard');
 const submitBtn = document.getElementById('submitBtn');
 const captchaError = document.getElementById('captchaError');
 
-// 🔄 تابع تبدیل اعداد فارسی/عربی به انگلیسی
-// تا کاربر بتواند با اعداد فارسی هم کد را وارد کند
+// تبدیل اعداد فارسی/عربی به انگلیسی
 function toEnglishDigits(str){
   const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
   const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -373,7 +370,6 @@ document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha)
 
 document.getElementById('inquiryForm').addEventListener('submit', function(e){
   e.preventDefault();
-  // ✅ تبدیل اعداد فارسی به انگلیسی قبل از جستجو
   const code = toEnglishDigits(document.getElementById('trackingCode').value.trim());
   const userAnswer = toEnglishDigits(document.getElementById('captchaAnswer').value.trim());
   const codeError = document.getElementById('codeError');
