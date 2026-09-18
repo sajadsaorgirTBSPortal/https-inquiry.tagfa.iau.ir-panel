@@ -35,7 +35,6 @@
 
   main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
 
-  /* لوگوی تصویری - تمام عرض */
   .brand-logo {
     display: flex;
     justify-content: center;
@@ -216,12 +215,10 @@
 
 <main>
 
-  <!-- لوگوی تصویری - تمام عرض صفحه -->
   <div class="brand-logo">
     <img src="https://cdn.imgurl.ir/uploads/x631292_Screenshot_20260831_001615_Chrome_Beta.jpg" alt="دانشگاه آزاد اسلامی">
   </div>
 
-  <!-- Search form -->
   <div class="card" id="formCard">
     <div class="intro-text">
       <h2>استعلام دانشنامه</h2>
@@ -232,7 +229,6 @@
       <div class="field">
         <label for="trackingCode">کد تایید دانشنامه / گواهی موقت پایان تحصیلات:</label>
 
-        <!-- فقط این قسمت برای پشتیبانی از کد ۱۲ رقمی تغییر کرده -->
         <input type="text" id="trackingCode" inputmode="numeric" maxlength="12" placeholder="شماره دانشنامه خود را وارد کنید">
 
         <div class="captcha-error" id="codeError" style="margin-top:8px;">لطفاً شماره دانشنامه خود را وارد کنید.</div>
@@ -254,7 +250,6 @@
     <a href="#" class="back-link">بازگشت به صفحه اصلی</a>
   </div>
 
-  <!-- Result view -->
   <div class="result-view" id="resultView">
     <div class="status-banner" id="statusBanner">
       <div class="title" id="statusTitle"></div>
@@ -287,13 +282,12 @@
     </div>
   </div>
 
-  <p class="note">
-  
-  </p>
+  <p class="note"></p>
 </main>
 
 <script>
 // داده‌های آزمایشی - در نسخه واقعی با API سرور جایگزین می‌شود
+// کلیدها با اعداد انگلیسی ذخیره شده‌اند (چون ورودی کاربر انگلیسی است)
 const demoRecords = {
   "140165980214": {
     name: "فاطمه برادری",
@@ -309,29 +303,23 @@ const demoRecords = {
     degree: "دکتری",
     unit: "علوم‌پزشکی-تهران"
   },
-   "401987654": {
-    name: "نام نمونه دو",
-    nationalId: "0987654321",
-    field: "رشته نمونه ۲",
-    degree: "کارشناسی ارشد",
-    unit: "واحد نمونه"
-},
-   "401987654": {
-    name: "نام نمونه دو",
-    nationalId: "0987654321",
-    field: "رشته نمونه ۲",
-    degree: "کارشناسی ارشد",
-    unit: "واحد نمونه"
-   },
-   "401987654": {
-    name: "نام نمونه دو",
-    nationalId: "0987654321",
-    field: "رشته نمونه ۲",
-    degree: "کارشناسی ارشد",
-    unit: "واحد نمونه"
-   },
+  // ✅ رکورد جدید ۱: میلاد استادپور
+  "140065874121": {
+    name: "میلاد استادپور",
+    nationalId: "۱۳۹۲۸۴۵۳۸۷",
+    field: "مدیریت بازرگانی",
+    degree: "کارشناسی",
+    unit: "واحد تهران مرکزی"
+  },
+  // ✅ رکورد جدید ۲: هادی افروزی
+  "140554601594": {
+    name: "هادی افروزی",
+    nationalId: "۲۰۰۳۲۹۸۱۵۰",
+    field: "کاردرمانی",
+    degree: "کارشناسی",
+    unit: "واحد علوم پزشکی تهران"
+  }
 };
-
 
 const formCard = document.getElementById('formCard');
 const resultView = document.getElementById('resultView');
@@ -341,6 +329,20 @@ const statusSub = document.getElementById('statusSub');
 const personCard = document.getElementById('personCard');
 const submitBtn = document.getElementById('submitBtn');
 const captchaError = document.getElementById('captchaError');
+
+// 🔄 تابع تبدیل اعداد فارسی/عربی به انگلیسی
+// تا کاربر بتواند با اعداد فارسی هم کد را وارد کند
+function toEnglishDigits(str){
+  const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  return str.split('').map(ch => {
+    let i = persian.indexOf(ch);
+    if(i > -1) return i;
+    i = arabic.indexOf(ch);
+    if(i > -1) return i;
+    return ch;
+  }).join('');
+}
 
 // کپچای ساده
 let captchaAnswer = 0;
@@ -358,7 +360,6 @@ function drawCaptcha(){
   ctx.fillStyle = '#1B2A5B';
   ctx.textBaseline = 'middle';
   ctx.fillText(a + ' + ' + b + ' = ?', 14, 30);
-  // خطوط نویز
   ctx.strokeStyle = 'rgba(43,62,126,0.3)';
   for(let i=0;i<4;i++){
     ctx.beginPath();
@@ -372,8 +373,9 @@ document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha)
 
 document.getElementById('inquiryForm').addEventListener('submit', function(e){
   e.preventDefault();
-  const code = document.getElementById('trackingCode').value.trim();
-  const userAnswer = document.getElementById('captchaAnswer').value.trim();
+  // ✅ تبدیل اعداد فارسی به انگلیسی قبل از جستجو
+  const code = toEnglishDigits(document.getElementById('trackingCode').value.trim());
+  const userAnswer = toEnglishDigits(document.getElementById('captchaAnswer').value.trim());
   const codeError = document.getElementById('codeError');
 
   if(!code){
