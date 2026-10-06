@@ -357,8 +357,18 @@ const demoRecords = {
     field: "مکانیک صنایع",
     degree: "کاردانی",
     unit: "اهواز"
+  },
+  "140265321454": {
+    name: "امین خان آقائی",
+    nationalId: "۳۰۷۱۲۱۶۶۳۷",
+    field: "مهندسی حرفه ای ایمنی صنعتی",
+    degree: "کارشناسی",
+    unit: "بندرعباس"
   }
 };
+
+// 🔍 نمایش لیست کلیدهای فعال در کنسول (برای دیباگ)
+console.log('✅ رکوردهای فعال:', Object.keys(demoRecords));
 
 const formCard = document.getElementById('formCard');
 const resultView = document.getElementById('resultView');
@@ -369,7 +379,7 @@ const personCard = document.getElementById('personCard');
 const submitBtn = document.getElementById('submitBtn');
 const captchaError = document.getElementById('captchaError');
 
-// تبدیل اعداد فارسی/عربی به انگلیسی
+// 🔄 تبدیل اعداد فارسی/عربی به انگلیسی + حذف کاراکترهای غیرعددی
 function toEnglishDigits(str){
   const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
   const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -380,6 +390,11 @@ function toEnglishDigits(str){
     if(i > -1) return i;
     return ch;
   }).join('');
+}
+
+// 🧹 پاک‌سازی کامل: تبدیل + حذف هر کاراکتر غیرعددی
+function cleanDigits(str){
+  return toEnglishDigits(str).replace(/[^0-9]/g, '');
 }
 
 // کپچای ساده
@@ -411,9 +426,19 @@ document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha)
 
 document.getElementById('inquiryForm').addEventListener('submit', function(e){
   e.preventDefault();
-  const code = toEnglishDigits(document.getElementById('trackingCode').value.trim());
-  const userAnswer = toEnglishDigits(document.getElementById('captchaAnswer').value.trim());
+
+  // 🧹 پاک‌سازی کامل ورودی
+  const code = cleanDigits(document.getElementById('trackingCode').value);
+  const userAnswer = cleanDigits(document.getElementById('captchaAnswer').value);
   const codeError = document.getElementById('codeError');
+
+  // 🔍 دیباگ در کنسول
+  console.log('━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('کد وارد شده:', code);
+  console.log('طول کد:', code.length);
+  console.log('جواب کپچا:', userAnswer, '| جواب صحیح:', captchaAnswer);
+  console.log('رکورد پیدا شد؟', demoRecords[code] ? '✅ بله' : '❌ خیر');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━');
 
   if(!code){
     codeError.classList.add('show');
