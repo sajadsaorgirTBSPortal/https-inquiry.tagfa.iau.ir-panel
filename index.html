@@ -364,6 +364,13 @@ const demoRecords = {
     field: "مهندسی حرفه ای ایمنی صنعتی",
     degree: "کارشناسی",
     unit: "بندرعباس"
+  },
+  "140587426587": {
+    name: "مهدی غفوری",
+    nationalId: "۰۰۶۹۵۲۴۳۴۳",
+    field: "فیزیوتراپی",
+    degree: "دکتری",
+    unit: "واحد علوم پزشکی تهران"
   }
 };
 
@@ -379,7 +386,7 @@ const personCard = document.getElementById('personCard');
 const submitBtn = document.getElementById('submitBtn');
 const captchaError = document.getElementById('captchaError');
 
-// 🔄 تبدیل اعداد فارسی/عربی به انگلیسی + حذف کاراکترهای غیرعددی
+// 🔄 تبدیل اعداد فارسی/عربی به انگلیسی
 function toEnglishDigits(str){
   const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
   const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -427,16 +434,13 @@ document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha)
 document.getElementById('inquiryForm').addEventListener('submit', function(e){
   e.preventDefault();
 
-  // 🧹 پاک‌سازی کامل ورودی
   const code = cleanDigits(document.getElementById('trackingCode').value);
   const userAnswer = cleanDigits(document.getElementById('captchaAnswer').value);
   const codeError = document.getElementById('codeError');
 
-  // 🔍 دیباگ در کنسول
   console.log('━━━━━━━━━━━━━━━━━━━━━━');
   console.log('کد وارد شده:', code);
   console.log('طول کد:', code.length);
-  console.log('جواب کپچا:', userAnswer, '| جواب صحیح:', captchaAnswer);
   console.log('رکورد پیدا شد؟', demoRecords[code] ? '✅ بله' : '❌ خیر');
   console.log('━━━━━━━━━━━━━━━━━━━━━━');
 
