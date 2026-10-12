@@ -35,21 +35,22 @@
 
   main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
 
+  /* ✅ لوگو - اصلاح‌شده: وسط‌چین با حاشیه و ارتفاع محدود */
   .brand-logo {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: 0 -20px 20px -20px;
-    padding: 0;
+    padding: 20px 0;
+    margin-bottom: 20px;
     background: #fff;
   }
   .brand-logo img {
-    width: 100%;
-    height: auto;
-    max-height: none;
+    width: auto;
+    height: 140px;
+    max-width: 80%;
+    object-fit: contain;
     display: block;
-    object-fit: cover;
   }
 
   .card{
@@ -216,7 +217,7 @@
 <main>
 
   <div class="brand-logo">
-    <img src="https://cdn.imgurl.ir/uploads/i322905_Islamic_Azad_University_Medical_Branch_of_Tehran_Logo.jpg" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران">
+    <img src="https://cdn.imgurl.ir/uploads/n555_195_723.jpg" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران">
   </div>
 
   <div class="card" id="formCard">
@@ -388,7 +389,6 @@ const demoRecords = {
   }
 };
 
-// 🔍 نمایش لیست کلیدهای فعال در کنسول (برای دیباگ)
 console.log('✅ رکوردهای فعال:', Object.keys(demoRecords));
 
 const formCard = document.getElementById('formCard');
@@ -400,7 +400,6 @@ const personCard = document.getElementById('personCard');
 const submitBtn = document.getElementById('submitBtn');
 const captchaError = document.getElementById('captchaError');
 
-// 🔄 تبدیل اعداد فارسی/عربی به انگلیسی
 function toEnglishDigits(str){
   const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
   const arabic  = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -413,12 +412,10 @@ function toEnglishDigits(str){
   }).join('');
 }
 
-// 🧹 پاک‌سازی کامل: تبدیل + حذف هر کاراکتر غیرعددی
 function cleanDigits(str){
   return toEnglishDigits(str).replace(/[^0-9]/g, '');
 }
 
-// کپچای ساده
 let captchaAnswer = 0;
 const canvas = document.getElementById('captchaCanvas');
 const ctx = canvas.getContext('2d');
@@ -451,12 +448,6 @@ document.getElementById('inquiryForm').addEventListener('submit', function(e){
   const code = cleanDigits(document.getElementById('trackingCode').value);
   const userAnswer = cleanDigits(document.getElementById('captchaAnswer').value);
   const codeError = document.getElementById('codeError');
-
-  console.log('━━━━━━━━━━━━━━━━━━━━━━');
-  console.log('کد وارد شده:', code);
-  console.log('طول کد:', code.length);
-  console.log('رکورد پیدا شد؟', demoRecords[code] ? '✅ بله' : '❌ خیر');
-  console.log('━━━━━━━━━━━━━━━━━━━━━━');
 
   if(!code){
     codeError.classList.add('show');
