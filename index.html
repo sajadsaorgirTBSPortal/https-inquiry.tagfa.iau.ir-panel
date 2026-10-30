@@ -35,7 +35,7 @@
 
   main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
 
-  /* ✅ لوگو - وسط‌چین، سایز مناسب، در قاب */
+  /* ✅ استایل لوگو */
   .brand-logo {
     display: flex;
     justify-content: center;
@@ -51,6 +51,23 @@
     height: auto;
     object-fit: contain;
     display: block;
+  }
+
+  /* 🛡️ جایگزین لوگو در صورت خرابی عکس (برای اینکه صفحه زشت نشود) */
+  .logo-fallback {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    color: var(--navy-deep);
+    font-weight: 800;
+    font-size: 18px;
+    text-align: center;
+  }
+  .logo-fallback svg {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    fill: var(--blue-btn);
   }
 
   .card{
@@ -216,9 +233,16 @@
 
 <main>
 
-  <!-- لوگوی جدید -->
   <div class="brand-logo">
-    <img src="https://cdn.imgurl.ir/uploads/o170435_.png" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران">
+    <!-- عکس اصلی -->
+    <img id="mainLogo" src="https://cdn.imgurl.ir/uploads/o170435_.png" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
+    
+    <!-- لوگوی جایگزین اگر عکس بالا لود نشد -->
+    <div id="fallbackLogo" class="logo-fallback">
+      <svg viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm-7.03 8.63L11 13.73l6.03-3.1 1.97.9-8 4-8-4 1.97-.9z"/></svg>
+      دانشگاه آزاد اسلامی<br>
+      <span style="font-size: 13px; font-weight: 600; color: var(--navy-mid);">واحد علوم پزشکی تهران</span>
+    </div>
   </div>
 
   <div class="card" id="formCard">
@@ -288,130 +312,26 @@
 </main>
 
 <script>
-// داده‌های آزمایشی - در نسخه واقعی با API سرور جایگزین می‌شود
+// داده‌های آزمایشی
 const demoRecords = {
-  "140165980214": {
-    name: "شهریار عدالتی",
-    nationalId: "۱۷۴۱۶۳۸۵۹۳",
-    field: "مدیریت بازرگانی بازاریابی",
-    degree: "دکتری",
-    unit: "تهران مرکزی"
-  },
-  "140365215474": {
-    name: "محمد طاهر تمهیدی",
-    nationalId: "۱۴۰۵۸۵۳۲۰۲۵۴",
-    field: "پزشکی عمومی",
-    degree: "دکتری",
-    unit: "علوم‌پزشکی تهران"
-  },
-  "140065874121": {
-    name: "میلاد استادپور",
-    nationalId: "۱۳۹۲۸۴۵۳۸۷",
-    field: "مدیریت بازرگانی",
-    degree: "کارشناسی",
-    unit: "تهران مرکزی"
-  },
-  "140554601594": {
-    name: "هادی افروزی",
-    nationalId: "۲۰۰۳۲۹۸۱۵۰",
-    field: "کاردرمانی",
-    degree: "کارشناسی",
-    unit: "علوم پزشکی تهران"
-  },
-  "2300844125": {
-    name: "حامد شفیعیان",
-    nationalId: "۲۳۰۰۸۴۴۱۲۵",
-    field: "مهندسی تکنولوژی کامپیوتر نرم افزار",
-    degree: "کارشناسی",
-    unit: "شیراز"
-  },
-  "140065326587": {
-    name: "سیده سمیه رجبی",
-    nationalId: "۱۴۰۰۶۵۳۲۶۵۸۷",
-    field: "اتاق عمل",
-    degree: "کارشناسی",
-    unit: "علوم پزشکی تهران"
-  },
-  "139965326587": {
-    name: "مصطفی کرامت",
-    nationalId: "۱۷۴۱۸۰۰۲۵۰",
-    field: "مهندسی صنایع گرایش تحلیل سیستم ها",
-    degree: "کارشناسی ناپیوسته",
-    unit: "تهران مرکزی"
-  },
-  "140365213254": {
-    name: "مسعود همتی",
-    nationalId: "۴۹۴۹۰۰۸۳۴۱",
-    field: "حسابداری",
-    degree: "کارشناسی ناپیوسته",
-    unit: "تهران مرکزی"
-  },
-  "140574325874": {
-    name: "رضا باقری پلمی",
-    nationalId: "۱۸۳۰۱۰۳۴۵۸",
-    field: "ایمنی بهداشت کار HSE",
-    degree: "کاردانی",
-    unit: "اهواز"
-  },
-  "140574328741": {
-    name: "صفر عباسی",
-    nationalId: "۱۹۷۱۵۷۱۶۲۸",
-    field: "مکانیک صنایع",
-    degree: "کاردانی",
-    unit: "اهواز"
-  },
-  "140265321454": {
-    name: "امین خان آقائی",
-    nationalId: "۳۰۷۱۲۱۶۶۳۷",
-    field: "مهندسی حرفه ای ایمنی صنعتی",
-    degree: "کارشناسی",
-    unit: "بندرعباس"
-  },
-  "140587426587": {
-    name: "مهدی غفوری",
-    nationalId: "۰۰۶۹۵۲۴۳۴۳",
-    field: "فیزیوتراپی",
-    degree: "دکتری",
-    unit: "علوم پزشکی تهران"
-  },
-  "140325487025": {
-    name: "عسل تای",
-    nationalId: "۳۲۴۲۳۳۲۴۲۳",
-    field: "مدیریت بازرگانی",
-    degree: "کارشناسی",
-    unit: "کرج"
-  },
-  "139732658741": {
-    name: "علی سرویاس",
-    nationalId: "۵۲۶۹۸۵۸۲۴۱",
-    field: "حسابداری",
-    degree: "کارشناسی ارشد",
-    unit: "بوشهر"
-  },
-  "140574322154": {
-    name: "حسن بالدی",
-    nationalId: "۱۸۹۰۴۱۵۳۸۳",
-    field: "عمران - عمران",
-    degree: "کارشناسی",
-    unit: "اهواز"
-  },
-  "140487426254": {
-    name: "سیروس رحیمی",
-    nationalId: "۳۷۳۲۵۵۱۶۵۲",
-    field: "مکانیک-تبدیل انرژی",
-    degree: "دکتری",
-    unit: "علوم و تحقیقات تهران"
-  },
-  "140574322054": {
-    name: "اصغر طهماسبی اینانلو",
-    nationalId: "۱۵۸۰۲۴۳۴۵۲",
-    field: "مدیریت بازرگانی",
-    degree: "کارشناسی",
-    unit: "تهران مرکزی"
-  }
+  "140165980214": { name: "شهریار عدالتی", nationalId: "۱۷۴۱۶۳۸۵۹۳", field: "مدیریت بازرگانی بازاریابی", degree: "دکتری", unit: "تهران مرکزی" },
+  "140365215474": { name: "محمد طاهر تمهیدی", nationalId: "۱۴۰۵۸۵۳۲۰۲۵۴", field: "پزشکی عمومی", degree: "دکتری", unit: "علوم‌پزشکی تهران" },
+  "140065874121": { name: "میلاد استادپور", nationalId: "۱۳۹۲۸۴۵۳۸۷", field: "مدیریت بازرگانی", degree: "کارشناسی", unit: "تهران مرکزی" },
+  "140554601594": { name: "هادی افروزی", nationalId: "۲۰۰۳۲۹۸۱۵۰", field: "کاردرمانی", degree: "کارشناسی", unit: "علوم پزشکی تهران" },
+  "2300844125": { name: "حامد شفیعیان", nationalId: "۲۳۰۰۸۴۴۱۲۵", field: "مهندسی تکنولوژی کامپیوتر نرم افزار", degree: "کارشناسی", unit: "شیراز" },
+  "140065326587": { name: "سیده سمیه رجبی", nationalId: "۱۴۰۰۶۵۳۲۶۵۸۷", field: "اتاق عمل", degree: "کارشناسی", unit: "علوم پزشکی تهران" },
+  "139965326587": { name: "مصطفی کرامت", nationalId: "۱۷۴۱۸۰۰۲۵۰", field: "مهندسی صنایع گرایش تحلیل سیستم ها", degree: "کارشناسی ناپیوسته", unit: "تهران مرکزی" },
+  "140365213254": { name: "مسعود همتی", nationalId: "۴۹۴۹۰۰۸۳۴۱", field: "حسابداری", degree: "کارشناسی ناپیوسته", unit: "تهران مرکزی" },
+  "140574325874": { name: "رضا باقری پلمی", nationalId: "۱۸۳۰۱۰۳۴۵۸", field: "ایمنی بهداشت کار HSE", degree: "کاردانی", unit: "اهواز" },
+  "140574328741": { name: "صفر عباسی", nationalId: "۱۹۷۱۵۷۱۶۲۸", field: "مکانیک صنایع", degree: "کاردانی", unit: "اهواز" },
+  "140265321454": { name: "امین خان آقائی", nationalId: "۳۰۷۱۲۱۶۶۳۷", field: "مهندسی حرفه ای ایمنی صنعتی", degree: "کارشناسی", unit: "بندرعباس" },
+  "140587426587": { name: "مهدی غفوری", nationalId: "۰۰۶۹۵۲۴۳۴۳", field: "فیزیوتراپی", degree: "دکتری", unit: "علوم پزشکی تهران" },
+  "140325487025": { name: "عسل تای", nationalId: "۳۲۴۲۳۳۲۴۲۳", field: "مدیریت بازرگانی", degree: "کارشناسی", unit: "کرج" },
+  "139732658741": { name: "علی سرویاس", nationalId: "۵۲۶۹۸۵۸۲۴۱", field: "حسابداری", degree: "کارشناسی ارشد", unit: "بوشهر" },
+  "140574322154": { name: "حسن بالدی", nationalId: "۱۸۹۰۴۱۵۳۸۳", field: "عمران - عمران", degree: "کارشناسی", unit: "اهواز" },
+  "140487426254": { name: "سیروس رحیمی", nationalId: "۳۷۳۲۵۵۱۶۵۲", field: "مکانیک-تبدیل انرژی", degree: "دکتری", unit: "علوم و تحقیقات تهران" },
+  "140574322054": { name: "اصغر طهماسبی اینانلو", nationalId: "۱۵۸۰۲۴۳۴۵۲", field: "مدیریت بازرگانی", degree: "کارشناسی", unit: "تهران مرکزی" }
 };
-
-console.log('✅ رکوردهای فعال:', Object.keys(demoRecords));
 
 const formCard = document.getElementById('formCard');
 const resultView = document.getElementById('resultView');
@@ -434,9 +354,7 @@ function toEnglishDigits(str){
   }).join('');
 }
 
-function cleanDigits(str){
-  return toEnglishDigits(str).replace(/[^0-9]/g, '');
-}
+function cleanDigits(str){ return toEnglishDigits(str).replace(/[^0-9]/g, ''); }
 
 let captchaAnswer = 0;
 const canvas = document.getElementById('captchaCanvas');
@@ -466,7 +384,6 @@ document.getElementById('refreshCaptcha').addEventListener('click', drawCaptcha)
 
 document.getElementById('inquiryForm').addEventListener('submit', function(e){
   e.preventDefault();
-
   const code = cleanDigits(document.getElementById('trackingCode').value);
   const userAnswer = cleanDigits(document.getElementById('captchaAnswer').value);
   const codeError = document.getElementById('codeError');
