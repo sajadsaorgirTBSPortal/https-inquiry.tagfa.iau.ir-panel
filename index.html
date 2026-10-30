@@ -35,7 +35,7 @@
 
   main{max-width:520px;margin:0 auto;padding:0 20px 60px;}
 
-  /* ✅ استایل لوگو */
+  /* ✅ لوگو - وسط‌چین، سایز مناسب، در قاب */
   .brand-logo {
     display: flex;
     justify-content: center;
@@ -51,23 +51,6 @@
     height: auto;
     object-fit: contain;
     display: block;
-  }
-
-  /* 🛡️ جایگزین لوگو در صورت خرابی عکس (برای اینکه صفحه زشت نشود) */
-  .logo-fallback {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    color: var(--navy-deep);
-    font-weight: 800;
-    font-size: 18px;
-    text-align: center;
-  }
-  .logo-fallback svg {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-    fill: var(--blue-btn);
   }
 
   .card{
@@ -233,16 +216,9 @@
 
 <main>
 
+  <!-- لوگو با لینک جدید + جلوگیری از کش -->
   <div class="brand-logo">
-    <!-- عکس اصلی -->
-    <img id="mainLogo" src="https://cdn.imgurl.ir/uploads/o170435_.png" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
-    
-    <!-- لوگوی جایگزین اگر عکس بالا لود نشد -->
-    <div id="fallbackLogo" class="logo-fallback">
-      <svg viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm-7.03 8.63L11 13.73l6.03-3.1 1.97.9-8 4-8-4 1.97-.9z"/></svg>
-      دانشگاه آزاد اسلامی<br>
-      <span style="font-size: 13px; font-weight: 600; color: var(--navy-mid);">واحد علوم پزشکی تهران</span>
-    </div>
+    <img src="https://cdn.imgurl.ir/uploads/o170435_.png?v=1" alt="دانشگاه آزاد اسلامی - علوم پزشکی تهران">
   </div>
 
   <div class="card" id="formCard">
